@@ -1,0 +1,37 @@
+name: Content Submission
+description: Submit a framework, playbook, template, or resource
+labels: ["content"]
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: Content type
+      options:
+        - Framework
+        - Playbook
+        - Template
+        - Resource list
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      placeholder: "e.g., LinkedIn outreach playbook for B2B SaaS"
+    validations:
+      required: true
+  - type: textarea
+    id: content
+    attributes:
+      label: Content
+      description: Paste your content here, or describe what you'd like to contribute. Markdown is fine.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Any background info? Your experience with this topic?
+    validations:
+      required: false
