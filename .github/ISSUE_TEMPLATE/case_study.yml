@@ -1,0 +1,50 @@
+name: Case Study
+description: Share your founder story
+labels: ["content", "case-study"]
+body:
+  - type: input
+    id: company
+    attributes:
+      label: Company / Product
+      placeholder: "e.g., Acme Analytics"
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      placeholder: "e.g., Oulu, Finland"
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Stage when this story takes place
+      options:
+        - Pre-revenue
+        - Early revenue (<100k ARR)
+        - Growing (100k-1M ARR)
+        - Scaling (1M+ ARR)
+    validations:
+      required: true
+  - type: textarea
+    id: story
+    attributes:
+      label: Your story
+      description: What did you do? What worked, what didn't? Include numbers if you can.
+    validations:
+      required: true
+  - type: textarea
+    id: lessons
+    attributes:
+      label: Key lessons
+      description: What would you tell another founder in the same situation?
+    validations:
+      required: true
+  - type: input
+    id: attribution
+    attributes:
+      label: How should we credit you?
+      placeholder: "Name, title, link (optional)"
+    validations:
+      required: false

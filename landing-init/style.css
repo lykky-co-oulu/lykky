@@ -1,0 +1,390 @@
+/* ============================================================
+   Lykky.co — Coming Soon — "Aurora Shader" (Version C)
+   ============================================================ */
+
+/* --- Reset & Base ------------------------------------------ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --black: #050508;
+  --green: #7eb8a2;
+  --green-dim: rgba(126, 184, 162, 0.35);
+  --white: #e8e4df;
+  --white-dim: rgba(232, 228, 223, 0.4);
+  --corner-line: rgba(126, 184, 162, 0.12);
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Archivo', sans-serif;
+  font-weight: 200;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Three.js Canvas --------------------------------------- */
+#canvas-container {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+#canvas-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* --- Film Grain Overlay ------------------------------------ */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+}
+
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: -200%;
+  width: 400%;
+  height: 400%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  animation: grain 0.8s steps(8) infinite;
+}
+
+@keyframes grain {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -10%);
+  }
+  20% {
+    transform: translate(-15%, 5%);
+  }
+  30% {
+    transform: translate(7%, -15%);
+  }
+  40% {
+    transform: translate(-5%, 15%);
+  }
+  50% {
+    transform: translate(-15%, 10%);
+  }
+  60% {
+    transform: translate(15%, 0%);
+  }
+  70% {
+    transform: translate(0%, 10%);
+  }
+  80% {
+    transform: translate(3%, -15%);
+  }
+  90% {
+    transform: translate(-10%, 10%);
+  }
+}
+
+/* --- Radial Vignette --------------------------------------- */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 30%,
+    rgba(5, 5, 8, 0.45) 65%,
+    rgba(5, 5, 8, 0.85) 100%
+  );
+}
+
+/* --- Corner Metadata --------------------------------------- */
+.corner {
+  position: fixed;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.corner__text {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 200;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--white-dim);
+  white-space: nowrap;
+}
+
+.corner__line {
+  display: block;
+  background: var(--corner-line);
+}
+
+.corner__line--h {
+  height: 1px;
+}
+
+.corner__line--v {
+  width: 1px;
+}
+
+/* Top-left */
+.corner--tl {
+  top: 28px;
+  left: 28px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.corner--tl .corner__line--h {
+  width: 48px;
+  margin-bottom: 10px;
+}
+
+.corner--tl .corner__line--v {
+  height: 48px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Top-right */
+.corner--tr {
+  top: 28px;
+  right: 28px;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.corner--tr .corner__line--h {
+  width: 48px;
+  margin-bottom: 10px;
+}
+
+.corner--tr .corner__line--v {
+  height: 48px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* Bottom-left */
+.corner--bl {
+  bottom: 28px;
+  left: 28px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.corner--bl .corner__line--h {
+  width: 48px;
+  margin-top: 10px;
+}
+
+.corner--bl .corner__line--v {
+  height: 48px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+/* Bottom-right */
+.corner--br {
+  bottom: 28px;
+  right: 28px;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.corner--br .corner__line--h {
+  width: 48px;
+  margin-top: 10px;
+}
+
+.corner--br .corner__line--v {
+  height: 48px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+/* --- Center Content ---------------------------------------- */
+.content {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Logo */
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(3rem, 8vw, 7rem);
+  letter-spacing: 0.02em;
+  color: var(--white);
+  mix-blend-mode: difference;
+  line-height: 1;
+  margin-bottom: 1.2rem;
+}
+
+/* Gradient Divider */
+.divider {
+  width: clamp(80px, 16vw, 200px);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--green) 30%,
+    var(--green) 70%,
+    transparent
+  );
+  opacity: 0.5;
+  margin-bottom: 1.4rem;
+}
+
+/* Tagline */
+.tagline {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 200;
+  font-size: clamp(0.6rem, 1.4vw, 0.85rem);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--white-dim);
+  margin-bottom: 2.8rem;
+}
+
+/* Slogan */
+.slogan {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1rem, 2.6vw, 1.65rem);
+  line-height: 1.6;
+  text-align: center;
+  color: var(--white);
+  opacity: 0.72;
+  margin-bottom: 2rem;
+  max-width: 28ch;
+}
+
+/* Signal (pulsing dot + location) */
+.signal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.signal__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green), 0 0 20px var(--green-dim);
+  animation: pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 8px var(--green), 0 0 20px var(--green-dim);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.75);
+    box-shadow: 0 0 4px var(--green), 0 0 10px var(--green-dim);
+  }
+}
+
+.signal__text {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 200;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--white-dim);
+}
+
+/* --- Fade-in Animation ------------------------------------- */
+.content,
+.corner {
+  opacity: 0;
+  animation: fadeIn 2s ease-out 0.4s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- Responsive -------------------------------------------- */
+@media (max-width: 640px) {
+  .corner {
+    display: none;
+  }
+
+  .logo {
+    font-size: clamp(2.2rem, 12vw, 3.5rem);
+  }
+
+  .tagline {
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+  }
+
+  .slogan {
+    font-size: clamp(0.9rem, 5vw, 1.2rem);
+    margin-bottom: 1.6rem;
+  }
+
+  .signal__text {
+    font-size: 0.55rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .corner--tl {
+    top: 20px;
+    left: 20px;
+  }
+  .corner--tr {
+    top: 20px;
+    right: 20px;
+  }
+  .corner--bl {
+    bottom: 20px;
+    left: 20px;
+  }
+  .corner--br {
+    bottom: 20px;
+    right: 20px;
+  }
+}
