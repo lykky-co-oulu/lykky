@@ -79,7 +79,7 @@ export default function LearnPage() {
       </header>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {collections.map((collection) => {
+        {collections.filter((c) => c.items.length > 0).map((collection) => {
           const count = collection.items.length
           const firstItem = collection.items[0]
           const firstHref = firstItem
@@ -98,40 +98,32 @@ export default function LearnPage() {
                 <CardDescription>{collection.description}</CardDescription>
               </CardHeader>
               <CardContent className="flex-1">
-                {count > 0 ? (
-                  <ul className="space-y-1 text-sm">
-                    {collection.items.slice(0, 4).map((item) => (
-                      <li key={item.slug}>
-                        <Link
-                          href={`${collection.slugPrefix}${item.slug}`}
-                          className="text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                          {item.title}
-                        </Link>
-                      </li>
-                    ))}
-                    {count > 4 && (
-                      <li className="text-muted-foreground text-xs">
-                        and {count - 4} more...
-                      </li>
-                    )}
-                  </ul>
-                ) : (
-                  <p className="text-sm text-muted-foreground italic">
-                    Coming soon
-                  </p>
-                )}
+                <ul className="space-y-1 text-sm">
+                  {collection.items.slice(0, 4).map((item) => (
+                    <li key={item.slug}>
+                      <Link
+                        href={`${collection.slugPrefix}${item.slug}`}
+                        className="text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        {item.title}
+                      </Link>
+                    </li>
+                  ))}
+                  {count > 4 && (
+                    <li className="text-muted-foreground text-xs">
+                      and {count - 4} more...
+                    </li>
+                  )}
+                </ul>
               </CardContent>
-              {count > 0 && (
-                <CardFooter>
-                  <Link
-                    href={firstHref}
-                    className="text-sm font-medium text-primary hover:underline"
-                  >
-                    Start reading &rarr;
-                  </Link>
-                </CardFooter>
-              )}
+              <CardFooter>
+                <Link
+                  href={firstHref}
+                  className="text-sm font-medium text-primary hover:underline"
+                >
+                  Start reading &rarr;
+                </Link>
+              </CardFooter>
             </Card>
           )
         })}
