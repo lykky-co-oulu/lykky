@@ -1,0 +1,219 @@
+---
+title: "Market Validation from Oulu"
+slug: market-validation
+description: "How to validate your startup idea from Oulu using Jobs to Be Done interviews, Outcome-Driven Innovation, and GenAI — for markets bigger than Finland."
+region: oulu
+order: 1
+tags:
+  - oulu
+  - finland
+  - market-validation
+  - jobs-to-be-done
+  - outcome-driven-innovation
+  - gtm
+author: Risto Holappa
+lastUpdated: "2026-03-14"
+---
+
+# Market Validation from Oulu
+
+Im being blunt: You are building a startup in Oulu but your market is not Oulu. It is too small.  But Oulu is one of the best places in Europe to validate from: low burn rate, deep technical talent, institutional support for internationalization, and a tight community for fast feedback.
+
+This playbook covers how to run a structured validation process using Jobs to Be Done (JTBD) and Outcome-Driven Innovation (ODI) — from Oulu, for international markets.
+
+---
+
+## Oulu as Launchpad
+
+Use Oulu for what it is good at:
+
+- **Low cost base** — run a 3-month validation sprint on a fraction of Helsinki or Stockholm budgets
+- **Testing infrastructure** — OuluHealth Labs, FabLab, 6G Flagship test networks. Build and test here, sell everywhere.
+- **International connections** — BusinessOulu, Business Finland, Nordic Innovation House all exist to connect you outward
+- **Honest feedback** — use local founders and mentors as sparring partners for your pitch and positioning
+
+> **From the field:** *When I was building Willit, marketplace for local and natural produce, even that it the sellers and buyers are active for this trend right now, there actual demand is also at the other nordics*
+
+---
+
+## Step 1: Define Your Hypothesis for a Real Market
+
+> We believe that **[customer segment]** in **[target market]** has the problem of **[pain point]** and would pay **[price]** for a solution that **[value proposition]**.
+
+Target a market worth building for. "Nordic SaaS companies with 50-200 employees" is a hypothesis. "Companies in Oulu" is not.
+
+| Market | Why from Oulu |
+|--------|--------------|
+| **Finland** | Beachhead — easy access, good public data, but too small alone |
+| **Nordics** | Culturally similar, Business Finland support, strong trade links |
+| **EU** | Large TAM, EU grants, university partnerships across Europe |
+| **US/Global** | Nordic Innovation House soft-landing, Oulu's low cost base is an advantage |
+
+> **From the field:** *[When I was building Willit I had clear that the initial one target market, like natural produce, farms, game / reindeer meat intrustry etc. is too small to be a viable target market. Just making calculations on how many people I could reach and looked in to other players, past failed startups. All helped on the journey.]*
+
+---
+
+## Step 2: Run 20 Interviews (Max 5 from Finland)
+
+Get 20 customer discovery interviews. Use Oulu networks (BusinessOulu, Business Finland, university contacts) for warm introductions to international prospects — not as the interview subjects themselves.
+
+**30-minute structure:**
+
+1. **Context** (5 min) — their day, their tools
+2. **Problem exploration** (15 min) — last time they experienced the problem, what they did, what it cost
+3. **Solution reaction** (5 min) — one-sentence concept, observe their gut reaction
+4. **Willingness to pay** (5 min) — would they pay, how much, what would stop them
+
+If fewer than 5 of 20 give strong signals ("When can I try this?"), rework the hypothesis.
+
+> **From the field:** *[I have been lucky that international customers have come to me for getting feedback and reach on some level. It helped that all websites have been made in multiple languages and the messaging was clear and compelling.]*
+
+---
+
+## Step 3: Jobs to Be Done — Uncover the Real Demand
+
+Standard interviews tell you what people say they want. JTBD tells you what they are actually trying to accomplish — the **functional, emotional, and social jobs** behind their behavior.
+
+**Job statement format:**
+
+> When **[situation]**, I want to **[motivation]**, so I can **[outcome]**.
+
+The job is stable across geographies. Solutions change. If the same job appears in Helsinki, Stockholm, and Amsterdam, you have found something universal.
+
+### The Job Map
+
+Map the full sequence your customer goes through:
+
+1. **Define** — what triggers the need
+2. **Locate** — finding inputs and resources
+3. **Prepare** — setup before execution
+4. **Confirm** — verifying readiness
+5. **Execute** — the core action
+6. **Monitor** — tracking progress
+7. **Modify** — adjusting when things change
+8. **Conclude** — finishing and what follows
+
+At each step, look for friction — slow, unreliable, or frustrating. That is where your product wins.
+
+### GenAI Interview Packs
+
+Use these prompts with Claude, ChatGPT, or any LLM. Copy, paste, fill in the brackets.
+
+#### Pack 1: Prepare Your Interviews
+
+```
+I am an Oulu-based startup targeting [customer segment] in [target market].
+
+My hypothesis: [your hypothesis]
+
+1. Write 5 JTBD interview questions that uncover the functional job,
+   emotional job, social job, and triggering context.
+2. Note how questions might land differently by market
+   (Nordic vs. US vs. Central European buyers).
+3. Suggest 3 "switch interview" questions about the last time they
+   switched solutions for this job.
+4. Map the 8 job map steps for this specific job with one probe
+   question each.
+```
+
+#### Pack 2: Analyze Each Interview
+
+```
+Here are my notes from a JTBD interview with [role, company, location]:
+
+[paste notes]
+
+1. Extract the core job statement:
+   "When [situation], I want to [motivation], so I can [outcome]"
+2. Identify emotional and social jobs.
+3. Map to the 8-step job map. Flag highest-friction steps.
+4. Write desired outcomes as ODI statements:
+   "Minimize the [time/likelihood/effort] it takes to [outcome]"
+5. Rate each: over-served, appropriately served, or under-served.
+6. Flag geography-specific vs. universal findings.
+```
+
+#### Pack 3: Synthesize Across All Interviews
+
+```
+I completed [N] JTBD interviews targeting [segment] across [markets].
+
+[paste all extracted jobs and outcomes]
+
+1. Rank core jobs by frequency and emotional energy.
+2. Segment interviewees by outcome priorities — do segments
+   correlate with geography or are they market-wide?
+3. Top 10 desired outcomes in ODI format, ranked.
+4. Calculate Opportunity Scores (Importance + max(Importance - Satisfaction, 0)).
+5. Flag over-served outcomes — do not compete there.
+6. Recommend which job(s) to target for an Oulu-based startup
+   building for international markets.
+```
+
+> **From the field:** *[JTBD specially for using with getAI has provided unique insights. As it could be little confusing to make large sets of interviews by hand. .]*
+
+---
+
+## Step 4: Feature-to-Outcome Map (ODI)
+
+Connect what you build to why customers care using **Outcome-Driven Innovation**.
+
+### Desired Outcome Statements
+
+> **[Direction]** + **[measure]** + **[object of control]** + **[context]**
+
+Example: "Minimize the **time** it takes to **get a new customer to their first success metric** after onboarding"
+
+### Score and Prioritize
+
+For each outcome, survey your interview subjects:
+
+- **Importance** (1-10): how critical to getting the job done
+- **Satisfaction** (1-10): how well current solutions deliver
+
+**Opportunity Score** = Importance + max(Importance - Satisfaction, 0)
+
+| Score | Meaning |
+|-------|---------|
+| 15-20 | **Under-served** — build here |
+| 10-14 | **Appropriately served** — room to improve |
+| 0-9 | **Over-served** — do not compete |
+
+### Build the Map
+
+Rate each feature against each outcome (0 = no impact, 3 = direct). The features with the highest weighted scores across your top under-served outcomes become your MVP.
+
+#### GenAI Prompt for the Map
+
+```
+I am building [product] from Oulu for [segment] in [markets].
+
+Desired outcomes ranked by Opportunity Score:
+[paste outcomes with scores]
+
+Candidate features:
+[list features]
+
+1. Create a Feature-to-Outcome matrix (0-3 scoring).
+2. Calculate Feature Priority Score:
+   sum(cell score × Opportunity Score) per feature.
+3. Recommend MVP feature set for top 3-5 under-served outcomes.
+4. Flag high-opportunity outcomes no feature addresses.
+5. Note where satisfaction varies by geography — launch there first.
+```
+
+> **From the field:** *[I loved to build and still does. Focus changed from time to time, and it gets refined. But what I learned that the features that is going to be builded has to be looked in to what is the income potential. It starts with gut feeling but the data helps refine it.]*
+
+---
+
+## Step 5: Validate Willingness to Pay
+
+Evidence from your target market, not just local contacts.
+
+- **Landing page** - targeted ads to your market geography. 5%+ conversion is a positive signal.
+- **LOIs** - non-binding letters of intent from international prospects carry the most weight with Finnish VCs and Business Finland.
+- **Pre-sales** — if 3-5 companies pay before you build, you have validated demand.
+- **Pilots** — Finnish companies are culturally comfortable with pilots. Use them as first reference cases, then use those cases to open doors in the Nordics.
+- **Public procurement** — check [Hilma](https://www.hankintailmoitukset.fi/en/) for similar solutions being procured. Finnish public sector can be stable beachhead revenue.
+
+> **From the field:** *This comes in my experience to trial and error, and main thing is to try and test hypothesis, but that every decision should have some concrete evidence to support it. I have builded large sets of data analytics that is build in to the systems internally. I dont trust 3rd party services so much*

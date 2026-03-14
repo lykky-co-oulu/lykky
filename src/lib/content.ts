@@ -64,3 +64,19 @@ export function getContentBySlug(slugSegments: string[]) {
       return undefined
   }
 }
+
+const collectionLabels: Record<CollectionType, string> = {
+  frameworks: 'Frameworks',
+  playbooks: 'Playbooks',
+  templates: 'Templates',
+  resources: 'Resources',
+  'case-studies': 'Case Studies',
+}
+
+/** Get collection info if the slug is just a collection name. */
+export function getCollectionBySlug(slug: string) {
+  if (!(slug in collectionLabels) && slug !== 'case-studies') return undefined
+  const type = slug as CollectionType
+  const items = getAllContent().filter((item) => item.collection === type)
+  return { type, label: collectionLabels[type], items }
+}

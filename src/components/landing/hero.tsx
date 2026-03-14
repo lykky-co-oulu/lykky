@@ -51,6 +51,28 @@ export function Hero() {
           Launching from Oulu, Finland
         </span>
       </div>
+
+      {/* Scroll indicator */}
+      <div className="pointer-events-auto absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-[bounce_2.4s_ease-in-out_infinite]">
+        <span className="font-sans text-[0.6rem] font-extralight uppercase tracking-[0.3em] text-[rgba(232,228,223,0.3)]">
+          Scroll
+        </span>
+        <svg
+          width="16"
+          height="24"
+          viewBox="0 0 16 24"
+          fill="none"
+          className="text-[rgba(126,184,162,0.4)]"
+        >
+          <path
+            d="M8 4L8 18M8 18L2 12M8 18L14 12"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
     </main>
   )
 }

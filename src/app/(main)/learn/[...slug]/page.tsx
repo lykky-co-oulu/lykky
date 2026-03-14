@@ -1,9 +1,10 @@
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 import { MDXContent } from '@/components/content/mdx-content'
 import { Breadcrumbs } from '@/components/layout/breadcrumbs'
 import { TableOfContents } from '@/components/layout/table-of-contents'
-import { getAllContent, getContentBySlug } from '@/lib/content'
+import { getAllContent, getContentBySlug, getCollectionBySlug } from '@/lib/content'
 import { Badge } from '@/components/ui/badge'
 
 interface ContentPageProps {
@@ -20,17 +21,79 @@ export async function generateMetadata({
   params,
 }: ContentPageProps): Promise<Metadata> {
   const { slug } = await params
+
+  // Collection index page (e.g. /learn/playbooks)
+  if (slug.length === 1) {
+    const collection = getCollectionBySlug(slug[0])
+    if (collection) {
+      const title = `${collection.label} — Lykky`
+      return { title, description: `Browse all ${collection.label.toLowerCase()} on Lykky.` }
+    }
+  }
+
   const content = getContentBySlug(slug)
   if (!content) return {}
 
+  const title = `${content.title} — Lykky`
+  const tags = 'tags' in content ? (content.tags as string[]) : []
+  const author = 'author' in content ? (content.author as string) : 'Lykky'
+
   return {
-    title: `${content.title} — Lykky`,
+    title,
     description: content.description,
+    keywords: tags,
+    authors: [{ name: author }],
+    openGraph: {
+      title,
+      description: content.description,
+      type: 'article',
+      siteName: 'Lykky',
+      ...(('lastUpdated' in content && content.lastUpdated) && {
+        modifiedTime: content.lastUpdated as string,
+      }),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: content.description,
+    },
   }
 }
 
 export default async function ContentPage({ params }: ContentPageProps) {
   const { slug } = await params
+
+  // Collection index page (e.g. /learn/playbooks)
+  if (slug.length === 1) {
+    const collection = getCollectionBySlug(slug[0])
+    if (collection) {
+      return (
+        <div>
+          <Breadcrumbs />
+          <h1 className="mb-2 text-3xl font-bold">{collection.label}</h1>
+          {collection.items.length === 0 ? (
+            <p className="text-muted-foreground">No content yet. Check back soon.</p>
+          ) : (
+            <ul className="mt-8 space-y-6">
+              {collection.items.map((item) => (
+                <li key={item.href} className="border-l-2 border-muted pl-4">
+                  <Link href={item.href} className="group block">
+                    <h2 className="text-xl font-semibold group-hover:text-primary transition-colors">
+                      {item.title}
+                    </h2>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )
+    }
+  }
+
   const content = getContentBySlug(slug)
   if (!content) notFound()
 
@@ -74,14 +137,19 @@ export default async function ContentPage({ params }: ContentPageProps) {
         <MDXContent code={content.body} />
 
         <footer className="mt-12 border-t pt-6 text-sm text-muted-foreground">
-          <p>
-            Last updated:{' '}
-            {new Date(content.lastUpdated).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            {'author' in content && content.author && (
+              <span>By {content.author}</span>
+            )}
+            <span>
+              Last updated:{' '}
+              {new Date(content.lastUpdated).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </span>
+          </div>
         </footer>
       </article>
 
