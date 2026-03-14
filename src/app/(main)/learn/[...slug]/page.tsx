@@ -5,6 +5,7 @@ import { MDXContent } from '@/components/content/mdx-content'
 import { Breadcrumbs } from '@/components/layout/breadcrumbs'
 import { TableOfContents } from '@/components/layout/table-of-contents'
 import { getAllContent, getContentBySlug, getCollectionBySlug } from '@/lib/content'
+import { getAuthorByName } from '@/lib/authors'
 import { Badge } from '@/components/ui/badge'
 
 interface ContentPageProps {
@@ -97,8 +98,34 @@ export default async function ContentPage({ params }: ContentPageProps) {
   const content = getContentBySlug(slug)
   if (!content) notFound()
 
+  const authorName = 'author' in content ? (content.author as string) : 'Lykky'
+  const author = getAuthorByName(authorName)
+
+  // Article schema — all data from our own content and author files
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: content.title,
+    description: content.description,
+    dateModified: content.lastUpdated,
+    author: author
+      ? { '@type': 'Person', name: author.name, url: author.url }
+      : { '@type': 'Organization', name: authorName },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Lykky',
+      url: 'https://www.lykky.co',
+    },
+    ...('tags' in content && { keywords: (content.tags as string[]).join(', ') }),
+  }
+
   return (
     <div className="flex gap-8">
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger -- JSON-LD from trusted internal data
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <article className="min-w-0 flex-1" data-pagefind-body>
         <Breadcrumbs />
 
@@ -138,8 +165,15 @@ export default async function ContentPage({ params }: ContentPageProps) {
 
         <footer className="mt-12 border-t pt-6 text-sm text-muted-foreground">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-            {'author' in content && content.author && (
-              <span>By {content.author}</span>
+            {author ? (
+              <Link
+                href={`/author/${author.slug}`}
+                className="text-primary hover:underline"
+              >
+                By {author.name}
+              </Link>
+            ) : (
+              authorName && <span>By {authorName}</span>
             )}
             <span>
               Last updated:{' '}
